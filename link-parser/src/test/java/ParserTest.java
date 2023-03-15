@@ -44,19 +44,17 @@ public class ParserTest {
     @Test
     public void testChainOfResponsibilityWithValidLink() {
         String url = "https://stackoverflow.com/questions/1642028/what-is-the-operator-in-c";
-        Parser githubParser = new GitHubParser();
         String expected = "1642028";
-        githubParser.setNextParser(new StackOverflowParser());
-        String result = githubParser.parse(url);
+        Parser parser = Parser.createParserChain();
+        String result = parser.parse(url);
         Assertions.assertEquals(expected, result);
     }
 
     @Test
     public void testChainOfResponsibilityWithInvalidLink() {
         String url = "https://tcsbank.ru/some-secrets";
-        Parser githubParser = new GitHubParser();
-        githubParser.setNextParser(new StackOverflowParser());
-        String result = githubParser.parse(url);
+        Parser parser = Parser.createParserChain();
+        String result = parser.parse(url);
         Assertions.assertNull(result);
     }
 }
