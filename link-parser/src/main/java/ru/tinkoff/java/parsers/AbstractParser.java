@@ -1,20 +1,9 @@
 package ru.tinkoff.java.parsers;
 
-import ru.tinkoff.java.dto.UrlData;
+public sealed abstract class AbstractParser implements Parser permits GitHubParser, StackOverflowParser {
+    protected Parser nextParser;
 
-public sealed abstract class AbstractParser permits GitHubParser, StackOverflowParser {
-    protected AbstractParser nextParser;
-
-    public abstract UrlData parse(String url);
-
-    public static AbstractParser createParserChain() {
-        AbstractParser gitHubParser = new GitHubParser();
-        AbstractParser stackOverflowParser = new StackOverflowParser();
-        gitHubParser.setNextParser(stackOverflowParser);
-        return gitHubParser;
-    }
-
-    void setNextParser(AbstractParser nextParser) {
+    public void setNextParser(Parser nextParser) {
         this.nextParser = nextParser;
     }
 }
