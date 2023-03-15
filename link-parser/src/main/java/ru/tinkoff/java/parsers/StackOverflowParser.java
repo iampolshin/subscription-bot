@@ -1,24 +1,20 @@
-package ru.tinkoff.java.parser;
+package ru.tinkoff.java.parsers;
+
+import ru.tinkoff.java.dto.StackOverflowData;
+import ru.tinkoff.java.dto.UrlData;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public record StackOverflowParser() implements Parser {
-    private static Parser nextParser;
-
+public final class StackOverflowParser extends AbstractParser {
     @Override
-    public String parse(String url) {
+    public UrlData parse(String url) {
         if (url.startsWith("https://stackoverflow.com")) {
             String patternString = "^https?://stackoverflow\\.com/questions/(\\d+)/";
             Matcher matcher = Pattern.compile(patternString).matcher(url);
-            return matcher.find() ? matcher.group(1) : null;
+            return matcher.find() ? new StackOverflowData(Integer.parseInt(matcher.group(1))) : null;
         }
         return nextParser == null ? null : nextParser.parse(url);
-    }
-
-    @Override
-    public void setNextParser(Parser next) {
-        nextParser = next;
     }
 }
 
