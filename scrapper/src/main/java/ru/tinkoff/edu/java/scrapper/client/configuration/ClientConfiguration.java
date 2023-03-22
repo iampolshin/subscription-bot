@@ -1,0 +1,28 @@
+package ru.tinkoff.edu.java.scrapper.client.configuration;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
+
+@Configuration
+public class ClientConfiguration {
+    @Value("${client.base-url.github:https://api.github.com}")
+    private static String githubBaseUrl;
+    @Value("${client.base-url.stackoverflow:https://api.stackexchange.com/2.3}")
+    private static String stackOverflowBaseUrl;
+
+    @Bean("gitHubClient")
+    public WebClient gitHubClient() {
+        return WebClient.builder()
+                .baseUrl(githubBaseUrl)
+                .build();
+    }
+
+    @Bean("stackOverflowClient")
+    public WebClient stackOverflowClient() {
+        return WebClient.builder()
+                .baseUrl(stackOverflowBaseUrl)
+                .build();
+    }
+}
