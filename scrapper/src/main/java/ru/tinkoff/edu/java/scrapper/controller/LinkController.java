@@ -1,5 +1,6 @@
 package ru.tinkoff.edu.java.scrapper.controller;
 
+import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,11 +17,15 @@ import ru.tinkoff.edu.java.scrapper.dto.RemoveLinkRequest;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
+
 @Validated
 @RestController
-@RequestMapping("/links")
+@RequestMapping(path = "/links",
+        consumes = MediaType.APPLICATION_JSON_VALUE,
+        produces = MediaType.APPLICATION_JSON_VALUE
+)
 public class LinkController {
-    @GetMapping("/{id}")
+    @GetMapping(path = "/{id}")
     public ListLinksResponse getAll(@PathVariable long id) {
         return new ListLinksResponse(new ArrayList<>(), 0);
     }
