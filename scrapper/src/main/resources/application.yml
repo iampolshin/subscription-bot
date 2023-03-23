@@ -1,5 +1,7 @@
 scrapper:
   test: "ficko"
+  scheduler:
+    interval: 5000
 
 springdoc:
   swagger-ui:

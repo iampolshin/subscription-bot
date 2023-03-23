@@ -6,5 +6,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Validated
 @ConfigurationProperties(prefix = "scrapper", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull String test) {
+public record ApplicationConfig(
+        @NotNull String test,
+        @NotNull Scheduler scheduler) {
 }
