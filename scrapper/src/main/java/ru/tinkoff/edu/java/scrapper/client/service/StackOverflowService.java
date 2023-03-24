@@ -8,6 +8,7 @@ import ru.tinkoff.edu.java.scrapper.client.dto.StackOverflowQuestionResponse;
 
 @Service
 public class StackOverflowService {
+    private static final String URI = "/questions/{id}";
     private final WebClient webClient;
 
     public StackOverflowService(@Qualifier("stackOverflowClient") WebClient webClient) {
@@ -17,7 +18,7 @@ public class StackOverflowService {
     public Mono<StackOverflowQuestionResponse> getQuestionById(int id) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/questions/{id}")
+                        .path(URI)
                         .queryParam("site", "stackoverflow")
                         .build(id))
                 .retrieve()

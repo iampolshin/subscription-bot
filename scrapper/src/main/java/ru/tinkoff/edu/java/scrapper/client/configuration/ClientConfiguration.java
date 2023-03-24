@@ -8,9 +8,9 @@ import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 
 @Configuration
 public class ClientConfiguration {
-    @Value("${client.base-url.github}")
+    @Value("${client.base-url.github:https://api.github.com}")
     private static String githubBaseUrl;
-    @Value("${client.base-url.stackoverflow}")
+    @Value("${client.base-url.stackoverflow:https://api.stackexchange.com/2.3}")
     private static String stackOverflowBaseUrl;
 
     @Bean("gitHubClient")

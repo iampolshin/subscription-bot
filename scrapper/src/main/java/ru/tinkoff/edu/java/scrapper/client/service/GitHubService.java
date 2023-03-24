@@ -8,6 +8,7 @@ import ru.tinkoff.edu.java.scrapper.client.dto.GitHubRepositoryResponse;
 
 @Service
 public class GitHubService {
+    private static final String URI = "/repos/{owner}/{repo}";
     private final WebClient webClient;
 
     public GitHubService(@Qualifier("gitHubClient") WebClient webClient) {
@@ -16,7 +17,7 @@ public class GitHubService {
 
     public Mono<GitHubRepositoryResponse> getRepository(String owner, String repo) {
         return webClient.get()
-                .uri("/repos/{owner}/{repo}", owner, repo)
+                .uri(URI, owner, repo)
                 .retrieve()
                 .bodyToMono(GitHubRepositoryResponse.class);
     }
