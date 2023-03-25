@@ -1,21 +1,18 @@
 package ru.tinkoff.edu.java.scrapper.client.impl;
 
 import jakarta.annotation.PostConstruct;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.tinkoff.edu.java.scrapper.client.dto.StackOverflowQuestionResponse;
 
-import java.util.Objects;
-
 public class StackOverflowClientImpl implements StackOverflowClient {
     private static final String URI = "/questions/{id}";
     private static final String BASE_URL = "https://api.stackexchange.com/2.3";
-    private WebClient webClient;
     private final String url;
+    private WebClient webClient;
 
 
-    public StackOverflowClientImpl(@Value("${client.base-url.stackoverflow}") String url) {
+    public StackOverflowClientImpl(String url) {
         this.url = url;
     }
 
@@ -26,7 +23,7 @@ public class StackOverflowClientImpl implements StackOverflowClient {
     @PostConstruct
     private void setUpWebClient() {
         webClient = WebClient.builder()
-                .baseUrl(Objects.requireNonNullElse(url, BASE_URL))
+                .baseUrl(url)
                 .build();
     }
 
