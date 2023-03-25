@@ -3,28 +3,31 @@ package ru.tinkoff.edu.java.scrapper.client.configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.function.client.WebClient;
+import ru.tinkoff.edu.java.scrapper.client.impl.GitHubClient;
+import ru.tinkoff.edu.java.scrapper.client.impl.GitHubClientImpl;
+import ru.tinkoff.edu.java.scrapper.client.impl.StackOverflowClient;
+import ru.tinkoff.edu.java.scrapper.client.impl.StackOverflowClientImpl;
 import ru.tinkoff.edu.java.scrapper.configuration.ApplicationConfig;
 
 @Configuration
 public class ClientConfiguration {
-    @Value("${client.base-url.github:https://api.github.com}")
-    private static String githubBaseUrl;
-    @Value("${client.base-url.stackoverflow:https://api.stackexchange.com/2.3}")
-    private static String stackOverflowBaseUrl;
+    private final String githubBaseUrl;
+    private final String stackOverflowBaseUrl;
 
-    @Bean("gitHubClient")
-    public WebClient gitHubClient() {
-        return WebClient.builder()
-                .baseUrl(githubBaseUrl)
-                .build();
+    public ClientConfiguration(@Value("${client.base-url.github}") String githubBaseUrl,
+                               @Value("${client.base-url.stackoverflow}") String stackOverflowBaseUrl) {
+        this.githubBaseUrl = githubBaseUrl;
+        this.stackOverflowBaseUrl = stackOverflowBaseUrl;
     }
 
-    @Bean("stackOverflowClient")
-    public WebClient stackOverflowClient() {
-        return WebClient.builder()
-                .baseUrl(stackOverflowBaseUrl)
-                .build();
+    @Bean
+    public GitHubClient gitHubClient() {
+        return new GitHubClientImpl(githubBaseUrl);
+    }
+
+    @Bean
+    public StackOverflowClient stackOverflowClient() {
+        return new StackOverflowClientImpl(stackOverflowBaseUrl);
     }
 
     @Bean
