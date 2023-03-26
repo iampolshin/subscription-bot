@@ -1,9 +1,8 @@
-package ru.tinkoff.edu.java.bot.handler;
+package ru.tinkoff.edu.java.bot.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.tinkoff.edu.java.bot.controller.UpdateController;
 import ru.tinkoff.edu.java.bot.dto.ApiErrorResponse;
 
 @RestControllerAdvice(
