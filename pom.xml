@@ -26,6 +26,7 @@
         <lombok.version>1.18.26</lombok.version>
         <jetbrains.annotations.version>23.1.0</jetbrains.annotations.version>
         <springdoc.version>2.0.2</springdoc.version>
+        <telegrambots.version>6.5.0</telegrambots.version>
     </properties>
 
     <dependencies>
@@ -102,6 +103,11 @@
                 <version>${springdoc.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.telegram</groupId>
+                <artifactId>telegrambots</artifactId>
+                <version>${telegrambots.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

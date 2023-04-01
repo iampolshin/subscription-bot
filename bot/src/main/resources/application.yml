@@ -1,5 +1,7 @@
 bot:
   test: "ficko"
+  username: "Подписки"
+  token: ${TOKEN}
 
 springdoc:
   swagger-ui:
