@@ -8,6 +8,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 @Order(2)
 public class HelpCommand extends AbstractCommand {
+    private static final String MSG = "Помогаю";
+
     public HelpCommand() {
         super(CommandList.HELP);
     }
@@ -15,6 +17,6 @@ public class HelpCommand extends AbstractCommand {
     @Override
     public SendMessage handle(Update update) {
         return new SendMessage(update.getMessage()
-                .getChatId().toString(), "Помогаю");
+                .getChatId().toString(), MSG);
     }
 }
