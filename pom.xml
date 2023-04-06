@@ -28,6 +28,7 @@
         <springdoc.version>2.0.2</springdoc.version>
         <liquibase-core.version>4.20.0</liquibase-core.version>
         <postgresql.version>42.6.0</postgresql.version>
+        <testcontainers.version>1.17.6</testcontainers.version>
     </properties>
 
     <dependencies>
@@ -114,6 +115,14 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-bom</artifactId>
+                <version>${testcontainers.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
 
         </dependencies>
