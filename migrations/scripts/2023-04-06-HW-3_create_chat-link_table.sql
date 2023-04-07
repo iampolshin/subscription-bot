@@ -1,6 +1,6 @@
 --liquibase formatted sql
 --changeset iampolshin:create_chat-link_table
-CREATE TABLE chat_link
+create table chat_link
 (
     chat_id bigint,
     link_id bigint,
