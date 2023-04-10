@@ -1,6 +1,11 @@
 bot:
   test: "ficko"
+  username: "Подписки"
+  token: ${TOKEN}
 
 springdoc:
   swagger-ui:
     path: "/swagger-ui"
+
+scrapper:
+  host: "localhost"
