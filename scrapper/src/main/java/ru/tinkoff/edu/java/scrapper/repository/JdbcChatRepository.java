@@ -20,11 +20,16 @@ public class JdbcChatRepository {
             delete from chat
             where id = ?
             """;
+    private static final String FIND_BY_ID_SQL = """
+            select id
+            from chat
+            where id = ?
+            """;
     private static final String FIND_ALL_SQL = """
             select id
             from chat
             """;
-    private static final RowMapper<Chat> ROW_MAPPER = new DataClassRowMapper<>(Chat.class);
+    public static final RowMapper<Chat> CHAT_ROW_MAPPER = new DataClassRowMapper<>(Chat.class);
 
 
     private final JdbcTemplate template;
@@ -37,7 +42,11 @@ public class JdbcChatRepository {
         return template.update(REMOVE_BY_ID_SQL, id);
     }
 
+    public Chat findById(long id) {
+        return template.queryForObject(FIND_BY_ID_SQL, CHAT_ROW_MAPPER, id);
+    }
+
     public List<Chat> findAll() {
-        return template.query(FIND_ALL_SQL, ROW_MAPPER);
+        return template.query(FIND_ALL_SQL, CHAT_ROW_MAPPER);
     }
 }

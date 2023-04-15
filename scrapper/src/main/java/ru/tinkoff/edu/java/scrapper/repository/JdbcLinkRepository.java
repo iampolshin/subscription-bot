@@ -45,7 +45,7 @@ public class JdbcLinkRepository {
             delete from link
             where url = ?
             """;
-    private static final RowMapper<Link> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Link.builder()
+    public static final RowMapper<Link> LINK_ROW_MAPPER = (ResultSet resultSet, int rowNum) -> Link.builder()
             .id(resultSet.getLong("id"))
             .url(URI.create(resultSet.getString("url")))
             .updatedAt(resultSet.getTimestamp("updated_at").toInstant())
@@ -72,14 +72,14 @@ public class JdbcLinkRepository {
     }
 
     public Link findById(long id) {
-        return template.queryForObject(FIND_BY_ID_SQL, ROW_MAPPER, id);
+        return template.queryForObject(FIND_BY_ID_SQL, LINK_ROW_MAPPER, id);
     }
 
     public Link find(Link link) {
-        return template.queryForObject(FIND_SQL, ROW_MAPPER, link.getUrl().toString());
+        return template.queryForObject(FIND_SQL, LINK_ROW_MAPPER, link.getUrl().toString());
     }
 
     public List<Link> findAll() {
-        return template.query(FIND_ALL_SQL, ROW_MAPPER);
+        return template.query(FIND_ALL_SQL, LINK_ROW_MAPPER);
     }
 }
