@@ -1,3 +1,5 @@
+package ru.tinkoff.edu.java.scrapper;
+
 import liquibase.Contexts;
 import liquibase.LabelExpression;
 import liquibase.Liquibase;
