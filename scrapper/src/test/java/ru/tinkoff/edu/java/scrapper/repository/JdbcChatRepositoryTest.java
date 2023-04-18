@@ -32,7 +32,7 @@ class JdbcChatRepositoryTest extends IntegrationEnvironment {
     private JdbcTemplate template;
 
     @Autowired
-    private JdbcChatRepository chatRepository;
+    private ChatRepository chatRepository;
 
     @Test
     @Transactional

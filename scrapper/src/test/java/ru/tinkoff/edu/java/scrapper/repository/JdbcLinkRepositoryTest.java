@@ -35,7 +35,7 @@ class JdbcLinkRepositoryTest extends IntegrationEnvironment {
     private JdbcTemplate template;
 
     @Autowired
-    private JdbcLinkRepository linkRepository;
+    private LinkRepository linkRepository;
 
     @Test
     @Transactional

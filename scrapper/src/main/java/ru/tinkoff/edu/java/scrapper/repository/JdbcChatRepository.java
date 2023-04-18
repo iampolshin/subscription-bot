@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -50,7 +51,11 @@ public class JdbcChatRepository implements ChatRepository {
     }
 
     public Chat findById(long id) {
-        return template.queryForObject(FIND_BY_ID_SQL, CHAT_ROW_MAPPER, id);
+        try {
+            return template.queryForObject(FIND_BY_ID_SQL, CHAT_ROW_MAPPER, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<Chat> findAll() {

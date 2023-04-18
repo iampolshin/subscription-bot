@@ -1,6 +1,7 @@
 package ru.tinkoff.edu.java.scrapper.repository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -71,11 +72,11 @@ public class JdbcLinkRepository implements LinkRepository {
     private final JdbcTemplate template;
 
     public Link save(Link link) {
-        if (link.getId() > 0) {
-            template.update(SAVE_BY_ID_SQL, link.getId(), link.getUrl().toString());
-        } else {
-            long id = template.queryForObject(SAVE_SQL, Long.class, link.getUrl().toString());
+        if (link.getId() == null) {
+            Long id = template.queryForObject(SAVE_SQL, long.class, link.getUrl().toString());
             link.setId(id);
+        } else {
+            template.update(SAVE_BY_ID_SQL, link.getId(), link.getUrl().toString());
         }
         return link;
     }
@@ -89,11 +90,19 @@ public class JdbcLinkRepository implements LinkRepository {
     }
 
     public Link findById(long id) {
-        return template.queryForObject(FIND_BY_ID_SQL, LINK_ROW_MAPPER, id);
+        try {
+            return template.queryForObject(FIND_BY_ID_SQL, LINK_ROW_MAPPER, id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public Link find(Link link) {
-        return template.queryForObject(FIND_SQL, LINK_ROW_MAPPER, link.getUrl().toString());
+        try {
+            return template.queryForObject(FIND_SQL, LINK_ROW_MAPPER, link.getUrl().toString());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 
     public List<Link> findAll() {
@@ -102,14 +111,16 @@ public class JdbcLinkRepository implements LinkRepository {
 
     @Override
     public boolean saveToChat(long chatId, long linkId) {
-        if (template.queryForObject(CHECK_IF_LINK_EXISTS_IN_CHAT_SQL, Boolean.class, chatId, linkId)) {
+        Boolean isPresent = template.queryForObject(CHECK_IF_LINK_EXISTS_IN_CHAT_SQL, boolean.class, chatId, linkId);
+        if (isPresent == null || isPresent) {
             return false;
         }
+
         return template.update(ADD_LINK_TO_CHAT_SQL, chatId, linkId) > 0;
     }
 
     @Override
-    public boolean removeFromChat(long linkId, long chatId) {
+    public boolean removeFromChat(long chatId, long linkId) {
         return template.update(REMOVE_LINK_FROM_CHAT_SQL, chatId, linkId) > 0;
     }
 
