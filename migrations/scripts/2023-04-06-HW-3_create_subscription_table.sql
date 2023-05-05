@@ -1,6 +1,6 @@
 --liquibase formatted sql
---changeset iampolshin:create_chat-link_table
-create table if not exists chat_link
+--changeset iampolshin:create_subscription_table
+create table if not exists subscription
 (
     chat_id bigint,
     link_id bigint,
